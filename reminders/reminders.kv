@@ -1,0 +1,80 @@
+<ReminderWindow>:
+    # Main Background Properties
+    id: main_win
+    orientation: "vertical"
+    spacing: 10
+    space_x: self.size[0]/3
+    canvas.before:
+        Color:
+            rgba:(1,1,1, 1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    
+    # Top Bar Properties
+    BoxLayout:
+        size_hint_y: None
+        height: 50
+        canvas.before:
+            Color:
+                rgba:(0.06,0.45,0.45, 1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        Label:
+            text:"Reminders"
+            bold: True
+            size_hint_x: .9
+
+        Button:
+            text: "X"
+            background_color:(0.06,0.45,0.45, 1)
+            background_normal: ''
+            size_hint_x: .1
+            on_release: app.stop()
+            
+        
+    # Canvas Properties
+    BoxLayout:
+        spacing: 20                                                       
+        padding: 20
+        orientation: 'horizontal'
+        
+        # Left Side Properties
+        BoxLayout:
+            size_hint_x: 0.15
+            orientation: 'vertical'
+            canvas.before:
+                Color:
+                    rgba:(0.06,0.45,0.45, 1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+        # Middle Side Properties
+        BoxLayout:
+            size_hint_x: 0.70
+            orientation: 'vertical'
+            canvas.before:
+                Color:
+                    rgba:(0.06,0.45,0.45, 1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+                    
+        # Right Side Properties
+        BoxLayout:
+            size_hint_x: 0.15
+            orientation: 'vertical'
+            canvas.before:
+                Color:
+                    rgba:(0.06,0.45,0.45, 1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos       
+                    
+        
+        
+        
+        
+        
