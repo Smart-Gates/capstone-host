@@ -5,22 +5,25 @@ from kivy.clock import Clock
 import time
 
 import requests
+import json
+import weather
 import sqlite3
 
-Builder.load_file("signin/signin.kv")
+Builder.load_file("/home/pi/repos/capstone-host/signin/signin.kv")
 
 class SigninWindow(BoxLayout):
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         Clock.schedule_interval(self.update_time, 1)
-    
+        Clock.schedule_interval(self.update_wicon, 180)
+        Clock.schedule_interval(self.update_wtemp, 180)
+        
     # Login Functionality
     def validate_user(self):
         
-        # Connect to database
-        conn = sqlite3.connect('Desktop/Kivy/ver0.2/signin/Smart_Gates_DB.db')
-        c = conn.cursor()
+        # sign in url 
+        url = "http://capstonespringboot-env.zegtxprh2h.us-east-2.elasticbeanstalk.com/api/auth/signin"
         
         # User/Email, Password and Error ids from signin.kv
         user = self.ids.usr_field
@@ -31,24 +34,31 @@ class SigninWindow(BoxLayout):
         uname = user.text
         pswd  = pwd.text
         
-        # Login checking
-        find_user = ("SELECT * FROM employees WHERE first_name = ? AND pass = ?")
-        c.execute(find_user, [(uname), (pswd)])
-        results = c.fetchall()
         
-        if uname == '' or pswd == '':
-            self.parent.parent.current = 'scrn_rem'
-            #error.text = '[color=#FF0000]username and password required[/color]'
-        #else:
-            
-            
+        # make login request
+        payload = {'email': uname, 'password': pswd}
+        headers = {'Content-type' : 'application/json'}
+        r = requests.post(url, data =json.dumps(payload),  headers = headers)
     
+        if r.status_code == 200:
+            self.parent.parent.current = 'scrn_rem'
+        if uname == '' or pswd == '':
+            error.text = '[color=#FF0000]username and password required[/color]'
+            
     # returns current time
     def update_time(self, *args):
         tim = self.ids.cur_time
         tim.text = time.asctime()
         return time.asctime()
-        
+    
+    # returns weather icon
+    def update_wicon(self, *args):
+        return weather.get_icon(weather.new_weather_req())
+    
+    # returns curremt temp
+    def update_wtemp(self, *args):
+        return weather.get_temp(weather.new_weather_req())
+    
 class SignApp(App):
     def build(self):
         return SigninWindow()
@@ -56,6 +66,4 @@ class SignApp(App):
 if __name__=="__main__":
     sa = SignApp()
     sa.run()
-    
-    
     

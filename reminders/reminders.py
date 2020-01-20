@@ -3,7 +3,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.lang import Builder
 import time
 
-Builder.load_file("reminders/reminders.kv")
+Builder.load_file("/home/pi/repos/capstone-host/reminders/reminders.kv")
 
 class ReminderWindow(BoxLayout):
     def __init__(self, **kwargs):
@@ -14,5 +14,5 @@ class ReminderApp(App):
         return ReminderWindow()
     
 if __name__=="__main__":
-    rem = ReminderApp()
-    rem.run()
+    re = ReminderApp()
+    re.run()

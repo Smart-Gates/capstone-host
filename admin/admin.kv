@@ -22,10 +22,16 @@
                 size: self.size
                 pos: self.pos
         Label:
-            text:"Admin"
+            text:"Reminders"
             bold: True
             size_hint_x: .9
 
         Button:
             text: "X"
+            background_color:(0.06,0.45,0.45, 1)
+            background_normal: ''
             size_hint_x: .1
+            on_release: app.stop()
+            
+        
+    

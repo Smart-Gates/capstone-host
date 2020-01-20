@@ -3,7 +3,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.lang import Builder
 import time
 
-Builder.load_file("admin/admin.kv")
+#Builder.load_file("/home/pi/repos/capstone-host/admin/admin.kv")
 
 class AdminWindow(BoxLayout):
     def __init__(self, **kwargs):

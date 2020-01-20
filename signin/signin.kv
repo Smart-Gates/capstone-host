@@ -119,10 +119,16 @@
                         Rectangle:
                             size: self.size
                             pos: self.pos
+                    
+                    Image:
+                        source: root.update_wicon()
+                        size: self.texture_size
+                    
                     Label:
                         id: cur_weather
-                        text: "Weather Goes here"
+                        text: root.update_wtemp()
                         bold: True
+                    
                 BoxLayout:
                     size_hint_y: None
                     canvas.before:
