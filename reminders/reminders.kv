@@ -1,110 +1,132 @@
-<ReminderWindow>:
-    # Main Background Properties
-    id: main_win
-    orientation: "vertical"
-    spacing: 10
-    space_x: self.size[0]/3
-    canvas.before:
+<MenuButton@ToggleButton>
+    size_hint: 0.349, 0.1
+    color: (0, 0, 0, 1)
+    background_color:(1 , 1, 1, 1)
+    background_color_down: (0,1,0,1)
+    background_normal: ''
+    bold: True
+    
+<MenuButtonAlt@Button>
+    size_hint: 0.349, 0.1
+    color: (0, 0, 0, 1)
+    background_color:(1 , 1, 1, 1)
+    background_color_down: (0,1,0,1)
+    background_normal: ''
+    bold: True
+
+<ReminderWindow>:  
+    #set the background white              
+    canvas:
         Color:
             rgba:(1,1,1, 1)
         Rectangle:
             size: self.size
             pos: self.pos
     
-    # Top Bar Properties
-    BoxLayout:
-        size_hint_y: None
-        height: 50
+    ScreenManager:
+        id: scrn_mngr
+        
+        Screen:
+            id: reminders
+            name: 'reminders'
+            pos_hint: {"x": 0.35}
+            size_hint: 0.55, 0.75
+                
+        Screen:
+            id: meetings
+            name: 'meetings'
+            pos_hint: {"x": 0.35}
+            size_hint: 0.55, 0.75       
+                    
+    # Teal area Layout
+    FloatLayout:
+        pos_hint: {"x": 0, "top": 1}
+        size_hint: 1, 0.25
         canvas.before:
             Color:
                 rgba:(0.06,0.45,0.45, 1)
             Rectangle:
                 size: self.size
                 pos: self.pos
-        Label:
-            text:"Reminders"
-            bold: True
-            size_hint_x: .9
-
-        Button:
-            text: "X"
-            background_color:(0.06,0.45,0.45, 1)
-            background_normal: ''
-            size_hint_x: .1
-            on_release: app.stop()
+        
+        Image:
+            pos_hint: {'x': 0.03, 'top': 0.65}
+            size_hint: None, None
+            allow_stretch: True
+            keep_ratio: False
+            source: 'user-icon.png'
             
+            
+        TextInput:
+            pos_hint: {"x": 0.35, "top": 0.40}
+            size_hint: 0.55, 0.25
+            font_size: 35
+            id: usr_field
+            hint_text: "Search"
+            multiline: False
+    
+    # Left Menu Layout
+    FloatLayout:
+        pos_hint: {"x": 0, "top": 0.75}
+        size_hint: 1, 0.75
         
-    # Canvas Properties
-    BoxLayout:
-        spacing: 20                                                       
-        padding: 20
-        orientation: 'horizontal'
-        
-        # Left Side Properties
-        BoxLayout:
-            size_hint_x: 0.15
-            orientation: 'vertical'
+        FloatLayout:
+            pos_hint: {"x": 0, "top": 1}
+            size_hint: 0.349, 1
             canvas.before:
                 Color:
-                    rgba:(0.06,0.45,0.45, 1)
+                    rgba:(1,1,1, 1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+        
+        FloatLayout:
+            pos_hint: {"x": 0.9, "top": 1}
+            size_hint: 0.1, 1
+            canvas.before:
+                Color:
+                    rgba:(1,1,1, 1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            
+        MenuButton:
+            pos_hint: {"x": 0, "top": 1}
+            text: "View Reminders"
+            state: 'down'
+            group: 'toggle'
+            on_state: root.change_screen(self)
+        MenuButton:
+            pos_hint: {"x": 0, "top": 0.9}
+            text: "View Meetings"
+            group: 'toggle'
+            on_state: root.change_screen(self)
+        MenuButton:
+            pos_hint: {"x": 0, "top": 0.8}
+            text: "Calander Mode"
+            group: 'toggle'
+        MenuButtonAlt:
+            pos_hint: {"x": 0, "top": 0.7}
+            text: "Add Reminder"
+        MenuButtonAlt:
+            pos_hint: {"x": 0, "top": 0.6}
+            text: "Create Meeting"
+        MenuButtonAlt:
+            pos_hint: {"x": 0, "top": 0.1}
+            text: "Log Out"
+            
+        # thin dividing line
+        FloatLayout:
+            pos_hint: {"x": 0.349, "top": 1}
+            size_hint: 0.001, 1
+            canvas.before:
+                Color:
+                    rgba:(0.06,0.45,0.45, 0.25)
                 Rectangle:
                     size: self.size
                     pos: self.pos
                     
-            Button:
-                text: "View Reminders"
-                background_color:(0.06,0.45,0.45, 1)
-                background_normal: ''
-                
-            Button:
-                text: "View Meetings"
-                background_color:(0.06,0.45,0.45, 1)
-                background_normal: ''
-                
-            Button:
-                text: "Add Reminder"
-                background_color:(0.06,0.45,0.45, 1)
-                background_normal: ''
-                
-            Button:
-                text: "Remove Reminder"
-                background_color:(0.06,0.45,0.45, 1)
-                background_normal: ''
-                
-            Button:
-                text: "Create Meeting"
-                background_color:(0.06,0.45,0.45, 1)
-                background_normal: ''
-                
-            Button:
-                text: "Cancel Meeting"
-                background_color:(0.06,0.45,0.45, 1)
-                background_normal: ''
-            
-        # Middle Side Properties
-        BoxLayout:
-            size_hint_x: 0.70
-            orientation: 'vertical'
-            canvas.before:
-                Color:
-                    rgba:(0.06,0.45,0.45, 1)
-                Rectangle:
-                    size: self.size
-                    pos: self.pos
+        
                     
-        # Right Side Properties
-        BoxLayout:
-            size_hint_x: 0.15
-            orientation: 'vertical'
-            canvas.before:
-                Color:
-                    rgba:(0.06,0.45,0.45, 1)
-                Rectangle:
-                    size: self.size
-                    pos: self.pos       
                     
-        
-        
-        
-        
-        
+    

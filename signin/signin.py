@@ -7,6 +7,7 @@ import time
 import requests
 import json
 import weather
+from capstone_requests import *
 import sqlite3
 
 Builder.load_file("/home/pi/repos/capstone-host/signin/signin.kv")
@@ -22,9 +23,10 @@ class SigninWindow(BoxLayout):
     # Login Functionality
     def validate_user(self):
         
-        # sign in url 
-        url = "http://capstonespringboot-env.zegtxprh2h.us-east-2.elasticbeanstalk.com/api/auth/signin"
-        
+        # Sign-in post request 
+        req = Reqs()
+        req.set_ext("/api/auth/signin")
+
         # User/Email, Password and Error ids from signin.kv
         user = self.ids.usr_field
         pwd  = self.ids.pwd_field
@@ -34,14 +36,16 @@ class SigninWindow(BoxLayout):
         uname = user.text
         pswd  = pwd.text
         
-        
         # make login request
         payload = {'email': uname, 'password': pswd}
-        headers = {'Content-type' : 'application/json'}
-        r = requests.post(url, data =json.dumps(payload),  headers = headers)
-    
-        if r.status_code == 200:
-            self.parent.parent.current = 'scrn_rem'
+        headers = {'Content-type' : 'application/json'}        
+        req.post_req(req.get_url(), payload, headers)
+
+        if req.get_status() == 200:
+            if req.get_role() == "USER":
+                self.parent.parent.current = 'scrn_rem'
+            else:
+                self.parent.parent.current = 'scrn_ad'
         if uname == '' or pswd == '':
             error.text = '[color=#FF0000]username and password required[/color]'
             

@@ -18,4 +18,3 @@ def get_temp(req):
 def get_icon(req):
     return ("weather/" + req["weather"][0]["icon"] + ".png")
 
-
