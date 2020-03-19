@@ -1,3 +1,116 @@
+<NewRemPop>:
+    
+    Slider:
+        id: slider
+        size_hint: 0.55, 0.13
+        pos_hint: {"x":0.1, "top":0.5}
+        min: root.minimumdate()
+        max: root.maximumdate()
+        on_value:
+            date_label.text = root.timestamp_to_datetime(args[1]) 
+    Label:
+        pos_hint: {"x":0.7, "y":0.35}
+        size_hint: 0.2, 0.13
+        text: root.timestamp_to_datetime(slider.value)
+        id: date_label
+        
+    TextInput:
+        id: title
+        size_hint: 0.8, 0.13
+        font_size: 30
+        pos_hint: {"x":0.1, "top":0.9}
+        hint_text: "Title"
+        multiline: False
+        
+    TextInput:
+        id: descrip
+        size_hint: 0.8, 0.13
+        font_size: 30
+        pos_hint: {"x":0.1, "top":0.7}
+        hint_text: "Description"
+        multiline: False
+        
+##    TextInput:
+##        id: time
+##        size_hint: 0.8, 0.13
+##        font_size: 30
+##        pos_hint: {"x":0.1, "top":0.5}
+##        hint_text: "Time"
+##        multiline: False
+        
+    Button:
+        id: addrem
+        text: "Add"
+        size_hint: 0.375, 0.2
+        pos_hint: {"x":0.1, "y":0.1}
+        on_release: root.new_rem()
+        
+    Button:
+        id: cancel
+        text: "Cancel"
+        size_hint: 0.375, 0.2
+        pos_hint: {"x":0.525, "y":0.1}
+        
+<NewEvePop>:
+    
+    Slider:
+        id: slider
+        size_hint: 0.55, 0.13
+        pos_hint: {"x":0.1, "top":0.65}
+        min: root.minimumdate()
+        max: root.maximumdate()
+        on_value:
+            date_label.text = root.timestamp_to_datetime(args[1]) 
+    Label:
+        pos_hint: {"x":0.7, "y":0.5}
+        size_hint: 0.2, 0.13
+        text: root.timestamp_to_datetime(slider.value)
+        id: date_label
+        
+    TextInput:
+        id: title
+        size_hint: 0.8, 0.13
+        font_size: 30
+        pos_hint: {"x":0.1, "top":0.95}
+        hint_text: "Title"
+        multiline: False
+        
+    TextInput:
+        id: descrip
+        size_hint: 0.8, 0.13
+        font_size: 30
+        pos_hint: {"x":0.1, "top":0.8}
+        hint_text: "Description"
+        multiline: False
+        
+##    TextInput:
+##        size_hint: 0.8, 0.13
+##        font_size: 30
+##        pos_hint: {"x":0.1, "top":0.65}
+##        hint_text: "Time"
+##        multiline: False
+    
+    TextInput:
+        id: member
+        size_hint: 0.8, 0.13
+        font_size: 30
+        pos_hint: {"x":0.1, "top":0.5}
+        hint_text: "Members"
+        multiline: False
+        
+    Button:
+        id: addrem
+        text: "Add"
+        size_hint: 0.375, 0.2
+        pos_hint: {"x":0.1, "y":0.05}
+        on_release: root.new_eve()
+        
+    Button:
+        id: cancel
+        text: "Cancel"
+        size_hint: 0.375, 0.2
+        pos_hint: {"x":0.525, "y":0.05}
+    
 <MenuButton@ToggleButton>
     size_hint: 0.349, 0.1
     color: (0, 0, 0, 1)
@@ -14,14 +127,7 @@
     background_normal: ''
     bold: True
 
-<ReminderWindow>:  
-    #set the background white              
-    canvas:
-        Color:
-            rgba:(1,1,1, 1)
-        Rectangle:
-            size: self.size
-            pos: self.pos
+<ReminderWindow>:
     
     ScreenManager:
         id: scrn_mngr
@@ -108,12 +214,15 @@
         MenuButtonAlt:
             pos_hint: {"x": 0, "top": 0.7}
             text: "Add Reminder"
+            on_release: root.add_rem_pop()
         MenuButtonAlt:
             pos_hint: {"x": 0, "top": 0.6}
-            text: "Create Meeting"
+            text: "Create Event"
+            on_release: root.add_eve_pop()
         MenuButtonAlt:
             pos_hint: {"x": 0, "top": 0.1}
             text: "Log Out"
+            on_release: root.logout()
             
         # thin dividing line
         FloatLayout:

@@ -1,3 +1,41 @@
+<GuestPhoto>:
+    TextInput:
+        id: title
+        size_hint: 0.8, 0.13
+        font_size: 30
+        pos_hint: {"x":0.1, "top":0.95}
+        hint_text: "Title"
+        multiline: False
+        
+    TextInput:
+        id: message
+        size_hint: 0.8, 0.13
+        font_size: 30
+        pos_hint: {"x":0.1, "top":0.8}
+        hint_text: "Message"
+        multiline: False
+        
+    TextInput:
+        id: email
+        size_hint: 0.8, 0.13
+        font_size: 30
+        pos_hint: {"x":0.1, "top":0.65}
+        hint_text: "Email"
+        multiline: False
+        
+    Button:
+        text: "Create"
+        on_release: root.create_req()
+        size_hint: 0.375, 0.2
+        pos_hint: {"x":0.1, "y":0.05}
+        
+    Button:
+        id: cancel
+        text: "Cancel"
+        size_hint: 0.375, 0.2
+        pos_hint: {"x":0.525, "y":0.05}
+
+
 <SigninWindow>:
     # Main Background Properties
     id: main_win
@@ -101,6 +139,7 @@
                     height: 80
                     background_color:(0.06,0.45,0.45, 1)
                     background_normal: ''
+                    on_release: root.capture()
                     
         # Right Side Properties
         BoxLayout:

@@ -7,10 +7,13 @@
         Screen:
             id: scrn_si
             name: 'scrn_si'
+            on_pre_enter: root.signin_schedule()
+            on_leave: root.signin_suspend()
             
         Screen:
             id: scrn_rem
             name: 'scrn_rem'
+            on_pre_enter: root.update_rem()
         
         Screen:
             id: scrn_ad

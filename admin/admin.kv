@@ -1,3 +1,98 @@
+<NewUser>:
+    TextInput:
+        id: first
+        size_hint: 0.8, 0.13
+        font_size: 30
+        pos_hint: {"x":0.1, "top":0.95}
+        hint_text: "First Name"
+        multiline: False
+        
+    TextInput:
+        id: last
+        size_hint: 0.8, 0.13
+        font_size: 30
+        pos_hint: {"x":0.1, "top":0.8}
+        hint_text: "Last Name"
+        multiline: False
+        
+    TextInput:
+        id: email
+        size_hint: 0.8, 0.13
+        font_size: 30
+        pos_hint: {"x":0.1, "top":0.65}
+        hint_text: "email"
+        multiline: False
+    
+    TextInput:
+        id: password
+        size_hint: 0.8, 0.13
+        font_size: 30
+        pos_hint: {"x":0.1, "top":0.5}
+        hint_text: "password"
+        multiline: False
+        
+    Button:
+        text: "Add"
+        on_release: root.add()
+        size_hint: 0.375, 0.2
+        pos_hint: {"x":0.1, "y":0.05}
+        
+    Button:
+        id: cancel
+        text: "Cancel"
+        size_hint: 0.375, 0.2
+        pos_hint: {"x":0.525, "y":0.05}
+
+<RemUser>:
+    TextInput:
+        id: email
+        size_hint: 0.8, 0.13
+        font_size: 30
+        pos_hint: {"x":0.1, "top":0.95}
+        hint_text: "User's Email"
+        multiline: False
+    
+    Button:
+        text: "Remove"
+        on_release: root.remove()
+        size_hint: 0.375, 0.2
+        pos_hint: {"x":0.1, "y":0.05}
+        
+    Button:
+        id: cancel
+        text: "Cancel"
+        size_hint: 0.375, 0.2
+        pos_hint: {"x":0.525, "y":0.05}
+        
+<AssignRFID>:
+    TextInput:
+        id: email
+        size_hint: 0.8, 0.13
+        font_size: 30
+        pos_hint: {"x":0.1, "top":0.95}
+        hint_text: "User's Email"
+        multiline: False
+
+    Button:
+        text: "Assign RFID"
+        size_hint: 0.375, 0.2
+        on_release: root.assign_three_steps()
+        pos_hint: {"x":0.1, "y":0.05}
+
+    Button:
+        id: cancel
+        text: "Cancel"
+        size_hint: 0.375, 0.2
+        pos_hint: {"x":0.525, "y":0.05}
+  
+<MenuButtonAlt@Button>
+    size_hint: 0.349, 0.1
+    color: (0, 0, 0, 1)
+    background_color:(1 , 1, 1, 1)
+    background_color_down: (0,1,0,1)
+    background_normal: ''
+    bold: True
+
 <AdminWindow>:
     # Main Background Properties
     id: main_win
@@ -12,26 +107,56 @@
             pos: self.pos
     
     # Top Bar Properties
-    BoxLayout:
-        size_hint_y: None
-        height: 50
+    FloatLayout:
+        size_hint_y: 0.075
+        pos_hint: {"x":0, "top":1}
         canvas.before:
             Color:
                 rgba:(0.06,0.45,0.45, 1)
             Rectangle:
                 size: self.size
                 pos: self.pos
-        Label:
-            text:"Reminders"
-            bold: True
-            size_hint_x: .9
-
-        Button:
-            text: "X"
-            background_color:(0.06,0.45,0.45, 1)
-            background_normal: ''
-            size_hint_x: .1
-            on_release: app.stop()
+    Label:
+        text:"Admin Panel"
+        bold: True
+        size_hint: 1, 0.075
+        pos_hint: {"x":0, "top":1}
             
+    Button:
+        text: "X"
+        background_color:(0.06,0.45,0.45, 1)
+        background_normal: ''
+        size_hint: 0.1, 0.075
+        pos_hint: {"x":0.9, "top":1}
         
+    MenuButtonAlt:
+        pos_hint: {"x": 0, "top": 0.925}
+        text: "Add User"
+        on_release: root.add_user()
+    MenuButtonAlt:
+        pos_hint: {"x": 0, "top": 0.825}
+        text: "Delete User"
+        on_release: root.rem_user()
+    MenuButtonAlt:
+        pos_hint: {"x": 0, "top": 0.725}
+        text: "Assign RFID"
+        on_release: root.assign_RFID()
+    MenuButtonAlt:
+        pos_hint: {"x": 0, "top": 0.625}
+        text: "Reminder Screen"
+        on_release: root.rem_screen()
+    MenuButtonAlt:
+        pos_hint: {"x": 0, "top": 0.1}
+        text: "Log Out"
+        on_release: root.logout()
+    
+    FloatLayout:
+        pos_hint: {"x": 0.349, "top": 0.925}
+        size_hint: 0.001, 1
+        canvas.before:
+            Color:
+                rgba:(0.06,0.45,0.45, 0.25)
+            Rectangle:
+                size: self.size
+                pos: self.pos
     
