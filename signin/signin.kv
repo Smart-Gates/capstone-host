@@ -1,24 +1,24 @@
 <GuestPhoto>:
-    TextInput:
+    MyTextInputpop:
         id: title
         size_hint: 0.8, 0.13
-        font_size: 30
+        #font_size: 30
         pos_hint: {"x":0.1, "top":0.95}
         hint_text: "Title"
         multiline: False
         
-    TextInput:
+    MyTextInputpop:
         id: message
         size_hint: 0.8, 0.13
-        font_size: 30
+        #font_size: 30
         pos_hint: {"x":0.1, "top":0.8}
         hint_text: "Message"
         multiline: False
         
-    TextInput:
+    MyTextInputpop:
         id: email
         size_hint: 0.8, 0.13
-        font_size: 30
+        #font_size: 30
         pos_hint: {"x":0.1, "top":0.65}
         hint_text: "Email"
         multiline: False
@@ -35,163 +35,306 @@
         size_hint: 0.375, 0.2
         pos_hint: {"x":0.525, "y":0.05}
 
-
-<SigninWindow>:
-    # Main Background Properties
-    id: main_win
-    orientation: "vertical"
-    spacing: 10
+<RoundedLabel@Button>:
+    background_color: 0,0,0,0
     canvas.before:
         Color:
-            rgba:(1,1,1, 1)
-        Rectangle:
-            size: self.size
+            rgba: (0.06,0.45,0.55, 1)
+        RoundedRectangle:
             pos: self.pos
+            size: self.size
+            radius: [30,]
+ 
+<MenuButtonSI@Button>:
+    background_color: 0,0,0,0
+    canvas.before:
+        Color:
+            rgba: (0.06,0.45,0.55, 1) if self.state =='normal' else (0.06,0.45,0.65,1)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [30,]
+
+<MyTextInput@TextInput>:
+    font_size: 35
+    background_color: 0,0,0,0
+    cursor_color: (0.66,0.72,0.95, 1)
+    canvas.before:
+        Color:
+            rgba: (1,1,1, 1)
+    canvas.after:
+        Color:
+            rgba: (0.66,0.72,0.95, 1)
+        Color:
+            rgba: (1,1,1, 1)
+        Line:
+            width: 2.
+            points: self.pos[0], self.pos[1] + 25, self.pos[0] + self.size[0], self.pos[1] + 25
+ 
+<MyTextInputpop@TextInput>:
+    font_size: 30
+    background_color: 0,0,0,0
+    cursor_color: (0.66,0.72,0.95, 1)
+    canvas.before:
+        Color:
+            rgba: (1,1,1, 1)
+    canvas.after:
+        Color:
+            rgba: (0.66,0.72,0.95, 1)
+        Color:
+            rgba: (1,1,1, 1)
+        Line:
+            width: 2.
+            points: self.pos[0], self.pos[1] + 20, self.pos[0] + self.size[0], self.pos[1] + 20
+ 
+<SigninWindow>:
     
-    # Top Bar Properties
-    BoxLayout:
-        size_hint_y: None
-        height: 50
+    FloatLayout:
+        pos_hint: {"x": 0, "top": 1}
+        size_hint: 1, 1
         canvas.before:
             Color:
-                rgba:(0.06,0.45,0.45, 1)
+                rgba:(0.66,0.82,0.91, 1)
             Rectangle:
                 size: self.size
                 pos: self.pos
-        Label:
-            text:"Login Portal"
-            bold: True
-            size_hint_x: .9
-            
-        Button:
-            text: "X"
-            background_color:(0.06,0.45,0.45, 1)
-            background_normal: ''
-            size_hint_x: .1
-            on_release: app.stop()
-    
-    # Canvas Properties
-    BoxLayout:
-        spacing: 10                                                       
-        padding: 20
-        orientation: 'horizontal'
         
-        # Left Side Properties
-        BoxLayout:
-            size_hint_x: 0.65
-            orientation: 'vertical'
-                    
-            BoxLayout:
-                orientation: 'vertical'
-                spacing: 10
-                padding: 100, 0
-                size_hint_y: None
-                height: 860
-                
-                Camera:
-                    allow_stretch: True
-                    #keep_ratio: False
-                    id: camera
-                    resolution: (640, 480)
-                    #size: 100,100
-                    height: 600
-                
-                Label:
-                    markup: True
-                    size_hint_y: None
-                    height: 20
-                
-                TextInput:
-                    size_hint_y: None
-                    height: 60
-                    font_size: 35
-                    id: usr_field
-                    hint_text: "Username"
-                    multiline: False
-                    
-                TextInput:
-                    size_hint_y: None
-                    height: 60
-                    font_size: 35
-                    id: pwd_field
-                    hint_text: "Password"
-                    multiline: False
-                    password: True
-                    
-                Label:
-                    id: error
-                    text: ''
-                    markup: True
-                    size_hint_y: None
-                    height: 100
-                
-                Button:
-                    text: "Sign In"
-                    size_hint_y: None
-                    height: 80
-                    background_color:(0.06,0.45,0.45, 1)
-                    background_normal: ''
-                    on_release: root.validate_user()
-                    
-                Button:
-                    text: "I'm a Guest"
-                    size_hint_y: None
-                    height: 80
-                    background_color:(0.06,0.45,0.45, 1)
-                    background_normal: ''
-                    on_release: root.capture()
-                    
-        # Right Side Properties
-        BoxLayout:
-            size_hint_x: 0.35
-            orientation: 'vertical'
-            BoxLayout:
-                spacing: 10
-                padding: 10
-                size_hint_y: 0.20
-                orientation: 'horizontal'
-                BoxLayout:
-                    size_hint_y: None
-                    canvas.before:
-                        Color:
-                            rgba:(0.06,0.45,0.45, 1)
-                        Rectangle:
-                            size: self.size
-                            pos: self.pos
-                    
-                    Image:
-                        source: root.update_wicon()
-                        size: self.texture_size
-                    
-                    Label:
-                        id: cur_weather
-                        text: root.update_wtemp()
-                        bold: True
-                    
-                BoxLayout:
-                    size_hint_y: None
-                    canvas.before:
-                        Color:
-                            rgba:(0.06,0.45,0.45, 1)
-                        Rectangle:
-                            size: self.size
-                            pos: self.pos
-                    Label:
-                        id: cur_time
-                        text: root.update_time()
-                        bold: True
-            BoxLayout:
-                size_hint_y: None
-                padding: 10
-                size_hint_y: 0.80
-                canvas.before:
-                    Color:
-                        rgba:(0.06,0.45,0.45, 1)
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-                Label:
-                    text: "Activity Feed"
-                    bold: True
-                    
+        Image:
+            pos_hint: {'x': 0.00, 'top': 1}
+            size_hint: 1, 0.32
+            allow_stretch: True
+            keep_ratio: False
+            source: 'header3.jpg'
+            
+        Camera:
+            pos_hint: {'x': -0.03, 'top': 0.62}
+            allow_stretch: True
+            size_hint: 0.53, 0.4
+            #keep_ratio: False
+            id: camera
+            resolution: (640, 480)
+
+        MyTextInput:
+            pos_hint: {'x': 0.5, 'top': 0.62}
+            size_hint: 0.40, 0.07
+            id: usr_field
+            hint_text: "Username"
+            multiline: False
+        
+        MyTextInput:
+            pos_hint: {'x': 0.5, 'top': 0.52}
+            size_hint: 0.40, 0.07
+            id: pwd_field
+            hint_text: "Password"
+            multiline: False
+            password: True
+            
+        MenuButtonSI:
+            text: "Sign In"
+            pos_hint: {'x': 0.5, 'top': 0.42}
+            size_hint: 0.40, 0.07
+            height: 80
+            on_release: root.validate_user()
+            
+        MenuButtonSI:
+            text: "I'm a Guest"
+            pos_hint: {'x': 0.5, 'top': 0.32}
+            size_hint: 0.40, 0.07
+            height: 80
+            on_release: root.capture()
+        
+        RoundedLabel:
+            pos_hint: {'x': 0.09, 'top': 0.18}
+            size_hint: 0.12, 0.07
+            
+        RoundedLabel:
+            pos_hint: {'x': 0.24, 'top': 0.18}
+            size_hint: 0.15, 0.07
+            
+        Image:
+            pos_hint: {'x': 0.10, 'top': 0.185}
+            size_hint: 0.05, 0.08
+            allow_stretch: True
+            keep_ratio: False
+            source: root.update_wicon()
+        
+        Label:
+            pos_hint: {'x': 0.13, 'top': 0.185}
+            size_hint: 0.08, 0.08
+            id: cur_weather
+            text: root.update_wtemp()
+            bold: True
+            
+        Label:
+            pos_hint: {'x': 0.27, 'top': 0.185}
+            size_hint: 0.08, 0.08
+            id: cur_time
+            text: root.update_time()
+            bold: True
+            
+        Label:
+            pos_hint: {'x': 0.55, 'top': 0.47}
+            size_hint: 0.08, 0.08
+            id: error
+            text: ''
+            markup: True
+            
+##<SigninWindow>:
+##    # Main Background Properties
+##    id: main_win
+##    orientation: "vertical"
+##    spacing: 10
+##    canvas.before:
+##        Color:
+##            rgba:(1,1,1, 1)
+##        Rectangle:
+##            size: self.size
+##            pos: self.pos
+##    
+##    # Top Bar Properties
+##    BoxLayout:
+##        size_hint_y: None
+##        height: 50
+##        canvas.before:
+##            Color:
+##                rgba:(0.06,0.45,0.45, 1)
+##            Rectangle:
+##                size: self.size
+##                pos: self.pos
+##        Label:
+##            text:"Login Portal"
+##            bold: True
+##            size_hint_x: .9
+##            
+##        Button:
+##            text: "X"
+##            background_color:(0.06,0.45,0.45, 1)
+##            background_normal: ''
+##            size_hint_x: .1
+##            on_release: app.stop()
+##    
+##    # Canvas Properties
+##    BoxLayout:
+##        spacing: 10                                                       
+##        padding: 20
+##        orientation: 'horizontal'
+##        
+##        # Left Side Properties
+##        BoxLayout:
+##            size_hint_x: 0.65
+##            orientation: 'vertical'
+##                    
+##            BoxLayout:
+##                orientation: 'vertical'
+##                spacing: 10
+##                padding: 100, 0
+##                size_hint_y: None
+##                height: 860
+##                
+##                Camera:
+##                    allow_stretch: True
+##                    #keep_ratio: False
+##                    id: camera
+##                    resolution: (640, 480)
+##                    #size: 100,100
+##                    height: 600
+##                
+##                Label:
+##                    markup: True
+##                    size_hint_y: None
+##                    height: 20
+##                
+##                TextInput:
+##                    size_hint_y: None
+##                    height: 60
+##                    font_size: 35
+##                    id: usr_field
+##                    hint_text: "Username"
+##                    multiline: False
+##                    
+##                TextInput:
+##                    size_hint_y: None
+##                    height: 60
+##                    font_size: 35
+##                    id: pwd_field
+##                    hint_text: "Password"
+##                    multiline: False
+##                    password: True
+##                    
+##                Label:
+##                    id: error
+##                    text: ''
+##                    markup: True
+##                    size_hint_y: None
+##                    height: 100
+##                
+##                Button:
+##                    text: "Sign In"
+##                    size_hint_y: None
+##                    height: 80
+##                    background_color:(0.06,0.45,0.45, 1)
+##                    background_normal: ''
+##                    on_release: root.validate_user()
+##                    
+##                Button:
+##                    text: "I'm a Guest"
+##                    size_hint_y: None
+##                    height: 80
+##                    background_color:(0.06,0.45,0.45, 1)
+##                    background_normal: ''
+##                    on_release: root.capture()
+##                    
+##        # Right Side Properties
+##        BoxLayout:
+##            size_hint_x: 0.35
+##            orientation: 'vertical'
+##            BoxLayout:
+##                spacing: 10
+##                padding: 10
+##                size_hint_y: 0.20
+##                orientation: 'horizontal'
+##                BoxLayout:
+##                    size_hint_y: None
+##                    canvas.before:
+##                        Color:
+##                            rgba:(0.06,0.45,0.45, 1)
+##                        Rectangle:
+##                            size: self.size
+##                            pos: self.pos
+##                    
+##                    Image:
+##                        source: root.update_wicon()
+##                        size: self.texture_size
+##                    
+##                    Label:
+##                        id: cur_weather
+##                        text: root.update_wtemp()
+##                        bold: True
+##                    
+##                BoxLayout:
+##                    size_hint_y: None
+##                    canvas.before:
+##                        Color:
+##                            rgba:(0.06,0.45,0.45, 1)
+##                        Rectangle:
+##                            size: self.size
+##                            pos: self.pos
+##                    Label:
+##                        id: cur_time
+##                        text: root.update_time()
+##                        bold: True
+##            BoxLayout:
+##                size_hint_y: None
+##                padding: 10
+##                size_hint_y: 0.80
+##                canvas.before:
+##                    Color:
+##                        rgba:(0.06,0.45,0.45, 1)
+##                    Rectangle:
+##                        size: self.size
+##                        pos: self.pos
+##                Label:
+##                    text: "Activity Feed"
+##                    bold: True
+##                    
             

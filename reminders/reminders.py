@@ -84,7 +84,7 @@ class NewEvePop(FloatLayout):
         slider = self.ids.slider
         
         addEvent = Create_Events_Req()
-        addEvent.post_req(addEvent.get_url(), addEvent.create_payload(title.text, descr.text, '350 victoria St', self.timestamp_to_datetime(slider.value), '2020-03-28T08:00:00', [member.text]), Reqs.get_headers_auth())
+        addEvent.post_req(addEvent.get_url(), addEvent.create_payload(title.text, descr.text, '350 victoria St', self.timestamp_to_datetime(slider.value), '2021-03-28T08:00:00', [member.text]), Reqs.get_headers_auth())
         print(addEvent.get_status)
         
 ## Reminder Window

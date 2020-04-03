@@ -47,7 +47,7 @@ class GuestPhoto(FloatLayout):
         image_req.post_req(image_req.get_url(), image_req.create_payload(title.text, message.text, email.text, b64_string.decode('utf-8')), Reqs.get_headers_noauth())
         print(image_req.get_text())
 
-class SigninWindow(BoxLayout):
+class SigninWindow(FloatLayout):
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

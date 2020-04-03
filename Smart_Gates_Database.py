@@ -2,8 +2,9 @@ import sqlite3
 import hashlib
 import random
 import string
+import math
 
-##
+####
 ##conn = sqlite3.connect('Smart_Gates_DB.db')
 ##
 ##c = conn.cursor()
@@ -38,8 +39,18 @@ import string
 
 #print(len(results))
 
+# list of lists to list
+def flatten_list(lst_list):
+    data = []
+    for sublist in lst_list:
+        for item in sublist:
+            data.append(item)
+    return data
 
 class Smart_Gates_Database():
+    
+    #static variable for the RFID
+    gl_tag = "Empty"
     
     def __init__(self):
         pass
@@ -194,7 +205,99 @@ class Smart_Gates_Database():
         conn.commit()
         conn.close()
 
-    def get_id(self, tag):
+    def create_event(self, data, num):
+        
+        data = Smart_Gates_Database.find_new_events(data, num)
+        num = math.floor(len(data)/7)
+        
+        # connect to database, establish cursor
+        conn = sqlite3.connect('Smart_Gates_DB.db')
+        c = conn.cursor()
+
+        enter_event = ("INSERT INTO events VALUES (?, ?, ?, ?, ?, ?, ?)")
+        
+        for x in range(num):
+            c.execute(enter_event, [(data[7*x]), (data[7*x+1]), (data[7*x+2]), (data[7*x+3]), (data[7*x+4]), (data[7*x+5]), (data[7*x+6])])
+
+        # commit and close connection
+        conn.commit()
+        conn.close()
+    
+    def create_reminder(self, data, num):
+        
+        data = Smart_Gates_Database.find_new_reminders(data, num)
+        num = math.floor(len(data)/5)
+        
+        # connect to database, establish cursor
+        conn = sqlite3.connect('Smart_Gates_DB.db')
+        c = conn.cursor()
+
+        enter_event = ("INSERT INTO reminders VALUES (?, ?, ?, ?, ?)")
+        
+        for x in range(num):
+            c.execute(enter_event, [(data[5*x]), (data[5*x+1]), (data[5*x+2]), (data[5*x+3]), (data[5*x+4])])
+
+        # commit and close connection
+        conn.commit()
+        conn.close()
+    
+    def get_reminders(self):
+        
+        id = Smart_Gates_Database.get_id(Smart_Gates_Database.gl_tag)
+        
+        # connect to database, establish cursor
+        conn = sqlite3.connect('Smart_Gates_DB.db')
+        c = conn.cursor()
+        
+        rem = ("SELECT * FROM reminders WHERE creatorID = ?")
+        c.execute(rem, [(id)])
+        reminders = c.fetchall()
+        
+        # commit and close connection
+        conn.commit()
+        conn.close()
+        
+        return reminders
+
+    def get_events(self):
+        
+        id = Smart_Gates_Database.get_id(Smart_Gates_Database.gl_tag)
+        
+        # connect to database, establish cursor
+        conn = sqlite3.connect('Smart_Gates_DB.db')
+        c = conn.cursor()
+        
+        ev = ("SELECT * FROM events WHERE creatorID = ?")
+        c.execute(ev, [(id)])
+        events = c.fetchall()
+        
+        # commit and close connection
+        conn.commit()
+        conn.close()
+        
+        return events
+    
+    def login_RFID(self, tag):
+        
+        Smart_Gates_Database.gl_tag = tag
+        
+        # connect to database, establish cursor
+        conn = sqlite3.connect('Smart_Gates_DB.db')
+        c = conn.cursor()
+        
+        login = ("SELECT * FROM users WHERE tag == ?")
+        c.execute(login, [(tag)])
+        count = c.fetchall()
+        
+        # commit and close connection
+        conn.commit()
+        conn.close()
+        
+        return len(count)
+    
+    # static method to return id from a tag
+    @staticmethod
+    def get_id(tag):
         
         # connect to database, establish cursor
         conn = sqlite3.connect('Smart_Gates_DB.db')
@@ -212,86 +315,82 @@ class Smart_Gates_Database():
         # return the id number 
         return results[0]
     
-    def create_event(self, data, num):
-        
-        # connect to database, establish cursor
-        conn = sqlite3.connect('Smart_Gates_DB.db')
-        c = conn.cursor()
-
-        enter_event = ("INSERT INTO events VALUES (?, ?, ?, ?, ?, ?, ?)")
-        
-        for x in range(num):
-            c.execute(enter_event, [(data[7*x]), (data[7*x+1]), (data[7*x+2]), (data[7*x+3]), (data[7*x+4]), (data[7*x+5]), (data[7*x+6])])
-
-        # commit and close connection
-        conn.commit()
-        conn.close()
+    # static method to return the RFID tag
+    @staticmethod
+    def get_RFID_tag():
+        return Smart_Gates_Database.gl_tag
     
-    def create_reminder(self, data, num):
-        
-        # connect to database, establish cursor
-        conn = sqlite3.connect('Smart_Gates_DB.db')
-        c = conn.cursor()
-
-        enter_event = ("INSERT INTO reminders VALUES (?, ?, ?, ?, ?)")
-        
-        for x in range(num):
-            c.execute(enter_event, [(data[5*x]), (data[5*x+1]), (data[5*x+2]), (data[5*x+3]), (data[5*x+4])])
-
-        # commit and close connection
-        conn.commit()
-        conn.close()
-    
-    def get_reminders(self):
+    # static method to return the new unique reminders
+    @staticmethod
+    def find_new_reminders(data, num):
         
         # connect to database, establish cursor
         conn = sqlite3.connect('Smart_Gates_DB.db')
         c = conn.cursor()
         
-        c.execute("SELECT * FROM reminders")
+        rem = ("SELECT * FROM reminders")
+        c.execute(rem)
         reminders = c.fetchall()
         
         # commit and close connection
         conn.commit()
         conn.close()
         
-        return reminders
-
-    def get_events(self):
+        # flatten results
+        reminders = flatten_list(reminders)
+        
+        new_data = data.copy()
+        
+        for x in range(num):
+            for y in range(math.floor(len(reminders)/5)):
+                if data[5*x] == reminders[5*y]:
+                    new_data[5*x] = -1
+                    new_data[5*x+1] = -1
+                    new_data[5*x+2] = -1
+                    new_data[5*x+3] = -1
+                    new_data[5*x+4] = -1
+        
+        new_data = [x for x in new_data if x != -1]
+        return new_data
+        
+    @staticmethod
+    def find_new_events(data, num):
         
         # connect to database, establish cursor
         conn = sqlite3.connect('Smart_Gates_DB.db')
         c = conn.cursor()
         
-        c.execute("SELECT * FROM events")
-        events = c.fetchall()
+        rem = ("SELECT * FROM events")
+        c.execute(rem)
+        reminders = c.fetchall()
         
         # commit and close connection
         conn.commit()
         conn.close()
         
-        return events
-    
-    def login_RFID(self, tag):
+        # flatten results
+        reminders = flatten_list(reminders)
         
-        # connect to database, establish cursor
-        conn = sqlite3.connect('Smart_Gates_DB.db')
-        c = conn.cursor()
+        new_data = data.copy()
         
-        login = ("SELECT * FROM users WHERE tag == ?")
-        c.execute(login, [(tag)])
-        count = c.fetchall()
+        for x in range(num):
+            for y in range(math.floor(len(reminders)/7)):
+                if data[7*x] == reminders[7*y]:
+                    new_data[7*x] = -1
+                    new_data[7*x+1] = -1
+                    new_data[7*x+2] = -1
+                    new_data[7*x+3] = -1
+                    new_data[7*x+4] = -1
+                    new_data[7*x+5] = -1
+                    new_data[7*x+6] = -1
         
-        # commit and close connection
-        conn.commit()
-        conn.close()
-        
-        return len(count)
-
+        new_data = [x for x in new_data if x != -1]
+        return new_data    
 ## testing
+        
 #create user table
 #test = Smart_Gates_Database()
-#test.create_user_table()
+#test.create_events_table()
 #print(test.get_id('X1B9OJWNRMGFZOYUN5K7AHUM1KO1XOEC1UOJHX8PNTRPV6IA909TLMV7CTC5ONNJ'))
 #a = test.generate_tag()
 

@@ -1,32 +1,32 @@
 <NewUser>:
-    TextInput:
+    MyTextInputpop:
         id: first
         size_hint: 0.8, 0.13
-        font_size: 30
+        #font_size: 30
         pos_hint: {"x":0.1, "top":0.95}
         hint_text: "First Name"
         multiline: False
         
-    TextInput:
+    MyTextInputpop:
         id: last
         size_hint: 0.8, 0.13
-        font_size: 30
+        #font_size: 30
         pos_hint: {"x":0.1, "top":0.8}
         hint_text: "Last Name"
         multiline: False
         
-    TextInput:
+    MyTextInputpop:
         id: email
         size_hint: 0.8, 0.13
-        font_size: 30
+        #font_size: 30
         pos_hint: {"x":0.1, "top":0.65}
         hint_text: "email"
         multiline: False
     
-    TextInput:
+    MyTextInputpop:
         id: password
         size_hint: 0.8, 0.13
-        font_size: 30
+        #font_size: 30
         pos_hint: {"x":0.1, "top":0.5}
         hint_text: "password"
         multiline: False
@@ -44,10 +44,10 @@
         pos_hint: {"x":0.525, "y":0.05}
 
 <RemUser>:
-    TextInput:
+    MyTextInputpop:
         id: email
         size_hint: 0.8, 0.13
-        font_size: 30
+        #font_size: 30
         pos_hint: {"x":0.1, "top":0.95}
         hint_text: "User's Email"
         multiline: False
@@ -65,10 +65,10 @@
         pos_hint: {"x":0.525, "y":0.05}
         
 <AssignRFID>:
-    TextInput:
+    MyTextInputpop:
         id: email
         size_hint: 0.8, 0.13
-        font_size: 30
+        #font_size: 30
         pos_hint: {"x":0.1, "top":0.95}
         hint_text: "User's Email"
         multiline: False
@@ -112,7 +112,7 @@
         pos_hint: {"x":0, "top":1}
         canvas.before:
             Color:
-                rgba:(0.06,0.45,0.45, 1)
+                rgba:(0.06,0.45,0.55, 1)
             Rectangle:
                 size: self.size
                 pos: self.pos
@@ -124,7 +124,7 @@
             
     Button:
         text: "X"
-        background_color:(0.06,0.45,0.45, 1)
+        background_color:(0.06,0.45,0.55, 1)
         background_normal: ''
         size_hint: 0.1, 0.075
         pos_hint: {"x":0.9, "top":1}
@@ -155,7 +155,7 @@
         size_hint: 0.001, 1
         canvas.before:
             Color:
-                rgba:(0.06,0.45,0.45, 0.25)
+                rgba:(0.06,0.45,0.55, 0.25)
             Rectangle:
                 size: self.size
                 pos: self.pos

@@ -37,7 +37,7 @@ Builder.load_string('''
 
 <CustButton>
     color: (0, 0, 0, 1)
-    background_color:(1 , 1, 1, 1)
+    background_color:(1,1,1, 1)
     background_normal: ''
     on_release: root.remove_rem()
 ''')

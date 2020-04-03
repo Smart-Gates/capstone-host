@@ -14,18 +14,18 @@
         text: root.timestamp_to_datetime(slider.value)
         id: date_label
         
-    TextInput:
+    MyTextInputpop:
         id: title
         size_hint: 0.8, 0.13
-        font_size: 30
+        #font_size: 30
         pos_hint: {"x":0.1, "top":0.9}
         hint_text: "Title"
         multiline: False
         
-    TextInput:
+    MyTextInputpop:
         id: descrip
         size_hint: 0.8, 0.13
-        font_size: 30
+        #font_size: 30
         pos_hint: {"x":0.1, "top":0.7}
         hint_text: "Description"
         multiline: False
@@ -67,18 +67,18 @@
         text: root.timestamp_to_datetime(slider.value)
         id: date_label
         
-    TextInput:
+    MyTextInputpop:
         id: title
         size_hint: 0.8, 0.13
-        font_size: 30
+        #font_size: 30
         pos_hint: {"x":0.1, "top":0.95}
         hint_text: "Title"
         multiline: False
         
-    TextInput:
+    MyTextInputpop:
         id: descrip
         size_hint: 0.8, 0.13
-        font_size: 30
+        #font_size: 30
         pos_hint: {"x":0.1, "top":0.8}
         hint_text: "Description"
         multiline: False
@@ -90,10 +90,10 @@
 ##        hint_text: "Time"
 ##        multiline: False
     
-    TextInput:
+    MyTextInputpop:
         id: member
         size_hint: 0.8, 0.13
-        font_size: 30
+        #font_size: 30
         pos_hint: {"x":0.1, "top":0.5}
         hint_text: "Members"
         multiline: False
@@ -114,15 +114,15 @@
 <MenuButton@ToggleButton>
     size_hint: 0.349, 0.1
     color: (0, 0, 0, 1)
-    background_color:(1 , 1, 1, 1)
+    background_color:(1,1,1, 1)
     background_color_down: (0,1,0,1)
     background_normal: ''
     bold: True
     
-<MenuButtonAlt@Button>
+<MenuButtonAltREM@Button>
     size_hint: 0.349, 0.1
     color: (0, 0, 0, 1)
-    background_color:(1 , 1, 1, 1)
+    background_color:(1,1,1, 1)
     background_color_down: (0,1,0,1)
     background_normal: ''
     bold: True
@@ -150,23 +150,22 @@
         size_hint: 1, 0.25
         canvas.before:
             Color:
-                rgba:(0.06,0.45,0.45, 1)
+                rgba:(0.06,0.45,0.55, 1)
             Rectangle:
                 size: self.size
                 pos: self.pos
         
         Image:
-            pos_hint: {'x': 0.03, 'top': 0.65}
+            pos_hint: {'x': 0.07, 'top': 0.65}
             size_hint: None, None
             allow_stretch: True
             keep_ratio: False
             source: 'user-icon.png'
             
             
-        TextInput:
+        MyTextInput:
             pos_hint: {"x": 0.35, "top": 0.40}
-            size_hint: 0.55, 0.25
-            font_size: 35
+            size_hint: 0.55, 0.33
             id: usr_field
             hint_text: "Search"
             multiline: False
@@ -211,15 +210,15 @@
             pos_hint: {"x": 0, "top": 0.8}
             text: "Calander Mode"
             group: 'toggle'
-        MenuButtonAlt:
+        MenuButtonAltREM:
             pos_hint: {"x": 0, "top": 0.7}
             text: "Add Reminder"
             on_release: root.add_rem_pop()
-        MenuButtonAlt:
+        MenuButtonAltREM:
             pos_hint: {"x": 0, "top": 0.6}
             text: "Create Event"
             on_release: root.add_eve_pop()
-        MenuButtonAlt:
+        MenuButtonAltREM:
             pos_hint: {"x": 0, "top": 0.1}
             text: "Log Out"
             on_release: root.logout()
@@ -230,7 +229,7 @@
             size_hint: 0.001, 1
             canvas.before:
                 Color:
-                    rgba:(0.06,0.45,0.45, 0.25)
+                    rgba:(0.06,0.45,0.55, 1)
                 Rectangle:
                     size: self.size
                     pos: self.pos
